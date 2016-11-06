@@ -5,12 +5,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import com.couponsystem.DAO.CouponDAO;
 import com.couponsystem.beans.Coupon;
 import com.couponsystem.dbdaolayer.CouponDBDAO;
+import com.couponsystem.exceptions.CouponSystemException;
 import com.couponsystem.exceptions.DAOException;
 
 public class DailyCouponExpirationTask extends Thread
@@ -71,8 +70,6 @@ public class DailyCouponExpirationTask extends Thread
 									{
 										System.out.println("Coupon Expire has been shut down, not running any more");
 										throw new CouponSystemException(e.getMessage());
-										// e.printStackTrace();//FIXME handle
-										// exception
 
 									}
 							}
@@ -80,29 +77,7 @@ public class DailyCouponExpirationTask extends Thread
 
 			}
 
-		private void startCouponDeletion()
-		{
-			waitForDelection();
-			try
-				{
-					List<Coupon> coupons = (List<Coupon>) couponDao.getAll();
-					for (Coupon coupon : coupons)
-						{
-							if (coupon.getEndDate().before(getDate()))
-								{
-									companyDao.deleteCouponFromJoinCompany(coupon.id)
-									customerDao.delete
-									couponDao.delete(coupon.getId());
-								}
-						}
-				}
-			catch (DAOException e)
-				{
-					System.out.println("Error has occured");
-					System.out.println(e.getMessage());
-					System.exit(0);
-				}
-		}
+
 
 		private void deleteCouponExpire()
 			{
@@ -143,9 +118,6 @@ public class DailyCouponExpirationTask extends Thread
 					zonedNext5 = zonedNext5.plusDays(1);
 				Duration duration = Duration.between(zonedNow, zonedNext5);
 				long initalDelay = duration.getSeconds();
-				// scheduler=Executors.newScheduledThreadPool(1);
-				// scheduler.scheduleAtFixedRate(new
-				// MyRunnableTask(),initalDelay,24*60*60,TimeUnit.SECONDS);
 				return initalDelay;
 			}
 

@@ -24,4 +24,8 @@ public interface CouponDAO extends GenericDaoClass<Coupon>
 
 	public boolean updateCouponAmount(long id) throws DAOException;
 
+	public void deleteCouponFromCompanyCoupon(long couponId) throws DAOException;
+
+	public void deleteCouponFromCustomerCoupon(long couponId) throws DAOException;
+
 }
