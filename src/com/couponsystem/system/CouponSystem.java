@@ -52,47 +52,34 @@ public class CouponSystem
 		{
 			CouponClientFacade facade=null;
 			
+			try
+				{
 			switch (type)
 				{
 				case ADMIN:
-				try
-					{
 						facade=AdminFacade.getInstance().login(name, password, type);
-					}
-				catch (Exception e)
-					{
-						throw new AdminFacadeException("Could not login " + e.getMessage());
-					}
-					break;
+						break;
 					
 				case CUSTOMER:
-				try
-					{
 						facade = CustomerFacade.getInstance().login(name, password, type);
-					}
-				catch (Exception e)
-					{
-						throw new CustomerFacadeException("Could not login " + e.getMessage());
-					}
-				break;
+						break;
 					
 				case COMPANY:
-				try
-					{
 						facade = CompanyFacade.getInstance().login(name, password, type);
-					}
-				catch (Exception e)
-					{
-						throw new CompanyFacadeException("Could not login " + e.getMessage());
-					}
-
-					break;
+						break;
+				}
+			
+				}
+			catch (Exception e)
+				{
+					throw new CustomerFacadeException("Could not login " + e.getMessage());
 				}
 			return facade;
 		}
 		
 		public void shutDown()
 		{
+			this.task.stopTask();
+			System.exit(0);
 		}
-
 	}
