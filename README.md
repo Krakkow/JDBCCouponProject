@@ -1,13 +1,15 @@
 #JDBCCouponProject
 
 
-For this application to run you HAVE to do several things first:
+#For this application to run you HAVE to do several things first:#
 1.Have JDK installed on your machine
+
 2.Have derby installed on your machine
+
 3.Start the derby DB client (preferable as administrator)
 
 
-Credentials:
+#Credentials:#
 
 Admin:
 Admin | 1234
@@ -20,7 +22,6 @@ TODO: create 4-5 customers and give credentials
 
 Coupon:
 TODO: create 4-5 coupons and give credentials
-
 
 As you'll progress with the application, you would be able to see different abilities, according to the client type.
 
