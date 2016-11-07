@@ -14,9 +14,10 @@ public class TableManagement
 	private static String dbName = "CouponSystemDB";
 	private static String dbUrl = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 	
-	public static void main(String[] args) 
+	public static void startDb()
 	{
-		boolean create = false;
+		dropAllTables();
+		boolean create = true;
 		boolean print = true;
 		boolean dropAll = false;
 		
@@ -42,7 +43,7 @@ public class TableManagement
 		}
 	}
 
-	public static void print(String tableName) 
+	private static void print(String tableName) 
 	{
 
 		try (Connection con = DriverManager.getConnection(dbUrl);) 

@@ -6,8 +6,6 @@ import com.couponsystem.DAO.CustomerDAO;
 import com.couponsystem.dbdaolayer.CompanyDBDAO;
 import com.couponsystem.dbdaolayer.CouponDBDAO;
 import com.couponsystem.dbdaolayer.CustomerDBDAO;
-import com.couponsystem.exceptions.AdminFacadeException;
-import com.couponsystem.exceptions.CompanyFacadeException;
 import com.couponsystem.exceptions.CustomerFacadeException;
 import com.couponsystem.facadedao.ClientType;
 import com.couponsystem.facadedao.CouponClientFacade;
