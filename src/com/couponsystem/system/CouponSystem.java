@@ -16,10 +16,10 @@ import com.couponsystem.facadedbdao.CustomerFacade;
 public class CouponSystem
 	{
 		private static CouponSystem instance;
-		private CompanyDAO comapnyDao;
-		private CustomerDAO customerDao;
-		private CouponDAO couponDao;
-		private DailyCouponExpirationTask task;
+		public CompanyDAO comapnyDao;
+		public CustomerDAO customerDao;
+		public CouponDAO couponDao;
+		public DailyCouponExpirationTask task;
 
 		private CouponSystem()
 			{

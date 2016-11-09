@@ -16,7 +16,7 @@ public class Coupon
 	private Date startDate;
 	private Date endDate;
 	private int amount;
-	private String type;
+	private CouponType type;
 	private String message;
 	private double price;
 	private String image;
@@ -28,7 +28,7 @@ public class Coupon
 	}
 
 
-	public Coupon(long id, String title, Date startDate, Date endDate, int amount, String type, String message,
+	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType type, String message,
 			double price, String image) 
 	{
 		super();
@@ -104,13 +104,13 @@ public class Coupon
 	}
 
 
-	public String getType() 
+	public CouponType getType() 
 	{
 		return type;
 	}
 
 
-	public void setType(String type) 
+	public void setType(CouponType type) 
 	{
 		this.type = type;
 	}
