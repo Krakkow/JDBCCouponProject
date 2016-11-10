@@ -37,17 +37,6 @@ public interface CompanyDAO extends GenericDaoClass<Company>
 
 		Collection<Coupon> getAllCouponsOfCompany(long companyId) throws DAOException;
 
-		Company getCompanyByName(String company) throws DAOException; 
-	}
+		Company getCompanyByName(String company) throws DAOException;
 
-// public abstract void createCompany(Company company);
-//
-// public abstract Company readCompany(long id);
-//
-// public abstract void updateCompany(Company company);
-//
-// public abstract void deleteCompany(Company company);
-//
-// public abstract Collection<Company> getAllCompanies();
-//
-//
+	}

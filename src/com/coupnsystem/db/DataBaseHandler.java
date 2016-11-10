@@ -12,6 +12,7 @@ import org.apache.derby.shared.common.error.DerbySQLIntegrityConstraintViolation
 
 import com.couponsystem.beans.Company;
 import com.couponsystem.beans.Coupon;
+import com.couponsystem.beans.Coupon.CouponType;
 import com.couponsystem.beans.Customer;
 import com.couponsystem.dbdaolayer.CompanyDBDAO;
 import com.couponsystem.dbdaolayer.CouponDBDAO;
@@ -386,7 +387,7 @@ public class DataBaseHandler
 				try
 					{
 						coupon = new Coupon(rs.getLong("ID"), rs.getString("TITLE"), rs.getDate("START_DATE"),
-								rs.getDate("END_DATE"), rs.getInt("AMOUNT"), rs.getString("TYPE"),
+								rs.getDate("END_DATE"), rs.getInt("AMOUNT"), CouponType.valueOf(rs.getString("TYPE")),
 								rs.getString("MASSAGE"), rs.getDouble("PRICE"), rs.getString("IMGPATH"));
 					}
 				catch (SQLException e)
