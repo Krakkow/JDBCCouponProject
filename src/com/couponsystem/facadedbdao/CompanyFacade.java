@@ -1,5 +1,6 @@
 package com.couponsystem.facadedbdao;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import com.couponsystem.DAO.CompanyDAO;
@@ -129,11 +130,11 @@ public class CompanyFacade implements CouponClientFacade
 			}
 	}
 
-	public void updateCoupon(Coupon coupon) throws CompanyFacadeException 
+	public void updateCoupon(long couponId, Date endDate, double price) throws CompanyFacadeException 
 	{
 		try
 			{
-				couponDao.update(coupon);
+				couponDao.update(couponId, endDate, price);
 			}
 		catch (DAOException e)
 			{

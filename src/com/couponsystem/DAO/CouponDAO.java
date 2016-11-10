@@ -1,5 +1,6 @@
 package com.couponsystem.DAO;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import com.couponsystem.beans.Coupon;
@@ -12,7 +13,7 @@ public interface CouponDAO extends GenericDaoClass<Coupon>
 
 	public Coupon read(long t) throws DAOException; 
 
-	public boolean update(Coupon t) throws DAOException; 
+	public boolean update(long couponId, Date endDate, double price) throws DAOException; 
 
 	public void delete(long t) throws DAOException; 
 
