@@ -48,9 +48,7 @@ public class CouponDBDAO implements CouponDAO
 		public boolean update(Coupon coupon) throws DAOException
 			{
 				String updateCoupon = "UPDATE Coupon SET endDate=?, price=? where id=?";
-				String MessageAction = new Object()
-					{
-					}.getClass().getEnclosingMethod().getName();
+				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
 				boolean didUpdateCoupon = DataBaseHandler.actionOnDataBase(updateCoupon, MessageAction,
 						coupon.getEndDate(), coupon.getPrice(), coupon.getId());
 				return didUpdateCoupon;

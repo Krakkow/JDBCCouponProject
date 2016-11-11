@@ -13,7 +13,7 @@ public interface CouponDAO extends GenericDaoClass<Coupon>
 
 	public Coupon read(long t) throws DAOException; 
 
-	public boolean update(long couponId, Date endDate, double price) throws DAOException; 
+	public boolean update(long couponId, Date endDate, double price) throws DAOException;
 
 	public void delete(long t) throws DAOException; 
 

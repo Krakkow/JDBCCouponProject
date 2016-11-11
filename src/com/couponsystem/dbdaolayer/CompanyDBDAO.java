@@ -1,5 +1,6 @@
 package com.couponsystem.dbdaolayer;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,6 +54,24 @@ public class CompanyDBDAO implements CompanyDAO
 						MessageAction, "Company", companyName);
 				return companiesByName.get(0);
 			}
+
+        @Override
+        public Collection<Coupon> getCouponByDate(Date endDate) throws DAOException
+		{
+            String getCouponsByDate = "SELECT * FROM Coupon WHERE endDate LIKE '[2000-3000]%'=?";
+			String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
+			List<Company> companiesByDate = (List<Company>) DataBaseHandler.readInDataBase(getCouponsByDate, MessageAction, "Coupon", endDate);
+            return (Collection<Coupon>) companiesByDate.get(0);
+        }
+
+		@Override
+		public Collection<Coupon> getCouponsByType(Coupon.CouponType couponType) throws DAOException
+		{
+			String getCouponsByType = "SELECT * FROM Coupon WHERE type=?";
+			String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
+			List<Coupon> couponsByType = (List<Coupon>) DataBaseHandler.readInDataBase(getCouponsByType, MessageAction, "Coupon", couponType);
+			return (Collection<Coupon>) couponsByType.get(0);
+		}
 
 		@Override
 		public boolean update(Company company) throws DAOException

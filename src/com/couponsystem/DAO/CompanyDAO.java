@@ -1,10 +1,11 @@
 package com.couponsystem.DAO;
 
-import java.util.Collection;
-
 import com.couponsystem.beans.Company;
 import com.couponsystem.beans.Coupon;
 import com.couponsystem.exceptions.DAOException;
+
+import java.sql.Date;
+import java.util.Collection;
 
 public interface CompanyDAO extends GenericDaoClass<Company>
 	{
@@ -38,5 +39,10 @@ public interface CompanyDAO extends GenericDaoClass<Company>
 		Collection<Coupon> getAllCouponsOfCompany(long companyId) throws DAOException;
 
 		Company getCompanyByName(String company) throws DAOException;
+
+		Collection<Coupon> getCouponByDate (Date endDate) throws DAOException;
+
+		Collection<Coupon> getCouponsByType(Coupon.CouponType type)throws DAOException;
+
 
 	}

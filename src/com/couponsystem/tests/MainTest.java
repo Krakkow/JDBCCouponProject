@@ -6,9 +6,7 @@ import com.couponsystem.beans.Company;
 import com.couponsystem.beans.Coupon;
 import com.couponsystem.beans.Coupon.CouponType;
 import com.couponsystem.beans.Customer;
-import com.couponsystem.exceptions.CouponSystemException;
-import com.couponsystem.exceptions.DAOException;
-import com.couponsystem.exceptions.ErrorType;
+import com.couponsystem.exceptions.*;
 import com.couponsystem.facadedao.ClientType;
 import com.couponsystem.facadedbdao.AdminFacade;
 import com.couponsystem.facadedbdao.CompanyFacade;
@@ -25,7 +23,7 @@ public class MainTest
 		/**
 		 *
 		 */
-		public static int totalCoupons;
+		public static int allCoupons;
 		public static CouponSystem couponSys;
 		private static Date date;
 
@@ -38,8 +36,7 @@ public class MainTest
 		 * @throws DAOException 
 		 */
 		@SuppressWarnings("static-access")
-		public MainTest(CouponSystem couponSys) throws CouponSystemException, DAOException
-			{
+		public MainTest(CouponSystem couponSys) throws Exception {
 				MainTest.couponSys = couponSys;
 				try
 					{
@@ -70,131 +67,367 @@ public class MainTest
 		 * @throws CouponSystemException
 		 *             CouponSystemException
 		 */
-		public static void initFacades(CouponSystem couponSys) throws CouponSystemException
-			{
+		public static void initFacades(CouponSystem couponSys) throws CouponSystemException {
 				// *************************************
 				System.out.println("*********************************" + "******************************************"
 						+ "**************************");
 				System.out.println("***Testing Company facade******" + "\n");
 				System.out.println("***Executing Company login : ***" + "\n");
+			try
+			{
 				System.out.println(couponSys.comapnyDao.login("SigmaDesigns", "1234AbC")
 						+ " Successfully logged");
-				CompanyFacade companyTest = (CompanyFacade) couponSys.login("SigmaDesigns", "1234AbC",
-						ClientType.COMPANY);
+			}
+			catch (DAOException e)
+			{
+				e.printStackTrace();
+			}
+			CompanyFacade companyTest = null;
+			try
+			{
+				companyTest = (CompanyFacade) couponSys.login("SigmaDesigns", "1234AbC",
+                            ClientType.COMPANY);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 
-				System.out.println("*****Creating standard Coupons*****" + "\n");
+			System.out.println("*****Creating standard Coupons*****" + "\n");
+			try
+			{
 				companyTest.createCoupon(new Coupon(6, "Holiday and Spa", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
-						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg"));
-				Coupon randomCoupon = new Coupon(7, "CinemaCity",Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
-						CouponType.MOVIES, "random coupon message", 149.99, "pathToImage/image.jpeg");
+						CouponType.TRAVELLING, "random coupon message", 49.99, "pathToImage/image.jpeg"));
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			Coupon randomCoupon = new Coupon(7, "CinemaCity",Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
+						CouponType.MOVIES, "random coupon message", 99.99, "pathToImage/image.jpeg");
 				Coupon expiredCoupon = new Coupon(8, "Kitan+", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
-						CouponType.HOMEDESIGN, "random coupon message", 149.99, "pathToImage/image.jpeg");
+						CouponType.HOMEDESIGN, "random coupon message", 109.99, "pathToImage/image.jpeg");
 				Coupon noCouponsLeft = new Coupon(9,"Bed & Breakfast", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
 						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
+				Coupon newCoupon1 = new Coupon(10,"Casino Trip", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
+						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
+				Coupon newCoupon2 = new Coupon(11,"Discover Cambodia", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
+						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
 
-				companyTest.creatCoupon(randomCoupon);
-				System.out.println("\n" + "***Getting all companies Coupons***" + "\n");
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println("\n");
+			try
+			{
+				companyTest.createCoupon(randomCoupon);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all company's Coupons***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n");
 				System.out.println("\n" + "***Creating Coupons***" + "\n");
-				companyTest.creatCoupon(hunny);
-				companyTest.creatCoupon(bear);
-				companyTest.creatCoupon(expired);
-				companyTest.creatCoupon(outOfAmountCoupon);
-				System.out.println("\n" + "***Getting all companies Coupons***" + "\n");
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println("\n" + "***Updating Coupon***");
-				companyTest.updateCoupon(7, generateDate(2018, 2019), 43.45);
+			try
+			{
+				companyTest.createCoupon(randomCoupon);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				companyTest.createCoupon(expiredCoupon);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				companyTest.createCoupon(noCouponsLeft);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all company's Coupons***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Updating Coupon***");
+			try
+			{
+				companyTest.updateCoupon(7, Date.valueOf("01\01\2017"), 43.45);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
 
-				System.out.println("\n" + "***Getting Coupons of Company***" + "\n");
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println(couponSys.couponDao.getAllCoupon());
-				System.out.println("\n" + "***Getting Coupons of Company by Date***" + "\n");
-				System.out.println(companyTest.getCouponByDate(generateDate(2016, 2018)));
-				System.out.println("\n" + "***Getting Coupons of Company up to price 91***" + "\n");
-				System.out.println(companyTest.getCouponUpToPrice(91));
-				System.out.println("\n" + "***Getting Coupons of Company by type TRAVELING***" + "\n");
-				System.out.println(companyTest.getCouponByType(CouponType.TRAVELING));
-				System.out.println("*********************************" + "******************************************"
+			System.out.println("\n" + "***Getting Coupons of Company***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				System.out.println(couponSys.couponDao.getAll());
+			}
+			catch (DAOException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting Coupons of Company by Date***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getCouponByDate(Date.valueOf("2017")));
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting Coupons of Company up to price 91***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getCouponsByPrice(109.99));
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting Coupons of Company by type TRAVELING***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getCouponsByType(CouponType.TRAVELLING));
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("*********************************" + "******************************************"
 						+ "**************************");
 				// *************************************
 				System.out.println("\n" + "***Testing Customer facade***" + "\n");
 				System.out.println("\n" + "***Executing Company login : ***" + "\n");
-				CustomerFacade ilyacustomer = (CustomerFacade) couponSys.login("ilya", "5556", ClientType.CUSTOMER);
-				System.out.println("login Sucessfully");
-				System.out.println("\n" + "***Purchasing coupons ***");
+			CustomerFacade myCustomer = null;
+			try
+			{
+				myCustomer = (CustomerFacade) couponSys.login("kowalsky", "1234", ClientType.CUSTOMER);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("login Successfully");
+			System.out.println("\n" + "***Purchasing coupons ***");
+			System.out.println("\n" + "is coupons with the name randomCOupon and noCouponsleft purchasing done successfully?");
+			try
+            {
+                myCustomer.purchaseCoupon(randomCoupon);
+            }
+            catch (CustomerFacadeException e)
+            {
+                e.printStackTrace();
+            }
+			try
+            {
+                myCustomer.purchaseCoupon(noCouponsLeft);
+            }
+            catch (CustomerFacadeException e)
+            {
+                e.printStackTrace();
+            }
+			try
+			{
+				System.out.println("\n" + " Coupons " + myCustomer.getAllPurchasedCoupons());
+			}
+			catch (CustomerFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Trying to purchase coupon that out of amount***" + "\n");
+			try
+            {
+                myCustomer.purchaseCoupon(noCouponsLeft);
+                System.out.println(myCustomer.getAllPurchasedCoupons());
+            }
+            catch (CustomerFacadeException e)
+            {
+                e.printStackTrace();
+            }
+			try
+            {
+                System.out.println(myCustomer.getAllPurchasedCoupons());
+            }
+            catch (CustomerFacadeException e)
+            {
+                e.printStackTrace();
+            }
+			try
+			{
+				companyTest.deleteCoupon(noCouponsLeft);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Trying to purchase coupon that has expired***" + "\n");
 				try
 					{
-						System.out.println("\n" + "is coupons with id of 7 and 8 purchasing done successfully?"
-								+ ilyacustomer.purchaseCoupon(7) + ilyacustomer.purchaseCoupon(8) + "\n");
+						myCustomer.purchaseCoupon(expiredCoupon);
 					}
-				catch (CouponSystemException e)
-					{
-						System.out.println(e.getMessage());
-						e.printStackTrace();
-
-					}
-				System.out.println("\n" + " Coupons " + ilyacustomer.getAllPurchasedCoupons());
-				System.out.println("\n" + "***Trying to purchase coupon that out of amount***" + "\n");
-				try
-					{
-						System.out.println(ilyacustomer.purchaseCoupon(11));
-						System.out.println(ilyacustomer.getAllPurchasedCoupons());
-					}
-				catch (CouponSystemException e)
+				catch (CustomerFacadeException e)
 					{
 						System.out.println(e.getMessage());
 					}
-				companyTest.removeCoupon(11);
-				System.out.println("\n" + "***Trying to purchase coupon that has expired***" + "\n");
-				try
-					{
-						System.out.println(ilyacustomer.purchaseCoupon(10));
-					}
-				catch (CouponSystemException e)
-					{
-						System.out.println(e.getMessage());
-					}
-				companyTest.removeCoupon(10);
-				System.out.println("\n" + "***Trying to purchase coupon that already exsist : ***" + "\n");
-				try
-					{
-						System.out.println(ilyacustomer.purchaseCoupon(8));
-					}
-				catch (CouponSystemException e)
-					{
-						System.out.println(e.getMessage());
-					}
-				totalCoupons = couponSys.couponDao.getAllCoupon().size() + 1;
-				System.out.println(ilyacustomer.purchaseCoupon(9));
-				System.out.println("\n" + "***Getting all purchased coupons ***" + "\n");
-				System.out.println(ilyacustomer.getAllPurchasedCoupons());
-				System.out.println("\n" + "***Getting all purchased coupons by type ELECTRICITY***" + "\n");
-				System.out.println(ilyacustomer.getAllPurchasedCouponsByType(CouponType.ELECTRICITY));
-				System.out.println("\n" + "***Getting all coupons ***" + "\n");
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println("\n" + "***Getting all coupons of the company by price ***" + "\n");
-				System.out.println(ilyacustomer.getAllPurchasedCouponsByPrice(41));
-				System.out.println("\n" + "***Getting all companies Coupons***" + "\n");
+			try
+			{
+				companyTest.deleteCoupon(expiredCoupon);
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Trying to purchase coupon that already exist : ***" + "\n");
+			try
+            {
+                myCustomer.purchaseCoupon(randomCoupon);
+            }
+            catch (CustomerFacadeException e)
+            {
+                e.printStackTrace();
+            }
+			try
+			{
+				allCoupons = couponSys.couponDao.getAll().size() + 1;
+			}
+			catch (DAOException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				myCustomer.purchaseCoupon(newCoupon1);
+			}
+			catch (CustomerFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all purchased coupons ***" + "\n");
+			try
+			{
+				System.out.println(myCustomer.getAllPurchasedCoupons());
+			}
+			catch (CustomerFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all purchased coupons by type ELECTRICITY***" + "\n");
+			try
+			{
+				System.out.println(myCustomer.getAllPurchasedCouponsByType(CouponType.ELECTRICITY));
+			}
+			catch (CustomerFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all coupons ***" + "\n");
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			}
+			catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all coupons of the company by price ***" + "\n");
+			try
+			{
+				System.out.println(myCustomer.getAllPurchasedCouponsByPrice(104.99));
+			}
+			catch (CustomerFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("\n" + "***Getting all companies Coupons***" + "\n");
 				System.out.println("*********************************" + "******************************************"
 						+ "**************************");
 				// ***************************************
 				System.out.println("\n" + "***Testing Admin facade***" + "\n");
-				AdminFacade admin = (AdminFacade) couponSys.login("admin", "1234", ClientType.ADMIN);
-				admin.creatCompany(new Company(0, "companyTest2", "1234", "bgtgg@Walla.co.il"));
-				CompanyFacade companyTest2 = (CompanyFacade) couponSys.login("companyTest2", "1234",
-						ClientType.COMPANY);
-				System.out.println(companyTest.getCouponsOfCompany());
-				System.out.println(companyTest.getCouponsOfCompany());
+			AdminFacade admin = null;
+			try
+			{
+				admin = (AdminFacade) couponSys.login("admin", "1234", ClientType.ADMIN);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				admin.createCompany(new Company(0, "companyTest2", "1234", "yahoo@wallack.co.il"));
+			}
+			catch (AdminFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			CompanyFacade companyTest2 = null;
+			try
+			{
+				companyTest2 = (CompanyFacade) couponSys.login("Apple", "1235", ClientType.COMPANY);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				System.out.println(companyTest.getAllCoupons());
+			} catch (CompanyFacadeException e)
+			{
+				e.printStackTrace();
+			}
+//			System.out.println(companyTest.getCouponsOfCompany());
+			try
+			{
 				System.out.println(admin.getAllCompanies());
-				companyTest2.creatCoupon(random.getRandomCoupon());
+			}
+			catch (AdminFacadeException e)
+			{
+				e.printStackTrace();
+			}
+			companyTest2.createCoupon(new Coupon(1, "Holiday", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
+					CouponType.TRAVELLING, "random coupon message", 149.99, "random image"));
 				companyTest2.creatCoupon(random.getRandomCoupon());
 				companyTest2.creatCoupon(random.getRandomCoupon());
 				System.out.println(couponSys.couponDao.getAllCoupon());
-				ilyacustomer.purchaseCoupon(12);
-				ilyacustomer.purchaseCoupon(13);
-				ilyacustomer.purchaseCoupon(14);
+				myCustomer.purchaseCoupon(12);
+				myCustomer.purchaseCoupon(13);
+				myCustomer.purchaseCoupon(14);
 				System.out.println("\n" + "***Trying to create coupon with title that already exists***" + "\n");
 				try
 					{
@@ -216,7 +449,7 @@ public class MainTest
 					}
 				System.out.println("\n" + "***Show all coupons***" + "\n");
 				System.out.println(couponSys.couponDao.getAllCoupon());
-				System.out.println(ilyacustomer.getAllPurchasedCoupons());
+				System.out.println(myCustomer.getAllPurchasedCoupons());
 				System.out.println(companyTest.getCouponsOfCompany());
 				admin.creatCompany(new Company(9, "asusASSHOLES", "12345", "bgt@Walla.co.il"));
 				System.out.println("\n" + "***Tyring to add Company that has the same name***");
@@ -275,9 +508,9 @@ public class MainTest
 				Coupon Food = new Coupon(2, "Food", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
 						CouponType.RESTAURANT, "random coupon message", 149.99, "random image");
 				couponSys.couponDao.create(Food);
-				Coupon Electricy = new Coupon(3, "Electricy", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"),
+				Coupon electricy = new Coupon(3, "Electricity", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"),
 						300, CouponType.ELECTRICITY, "random coupon message", 149.99, "random image");
-				couponSys.couponDao.create(Electricy);
+				couponSys.couponDao.create(electricy);
 				Coupon Sport = new Coupon(4, "Sport", Date.valueOf("01\01\2016"), Date.valueOf("01\01\2017"), 300,
 						CouponType.SPORTS, "random coupon message", 149.99, "random image");
 				couponSys.couponDao.create(Sport);
@@ -319,11 +552,11 @@ public class MainTest
 				couponSys.comapnyDao.create(new Company(1, "Intel", "1234abc", "intel@intel.com"));
 				couponSys.comapnyDao.create(new Company(2, "Qualitest", "1234abc", "Melbourne@liquid.com"));
 				couponSys.comapnyDao.create(new Company(3, "SigmaDesigns", "1234AbC", "Mel34@liquid.com"));
-				Company google = new Company(4, "Apple", "1235", "appleCrack@gsdgs.com");
-				couponSys.comapnyDao.create(google);
-				google.setEmail("blabla@Goo.com");
-				couponSys.comapnyDao.update(google);
-				System.out.println(couponSys.comapnyDao.login("google", "1235"));
+				Company apple = new Company(4, "Apple", "1235", "appleCrack@gsdgs.com");
+				couponSys.comapnyDao.create(apple);
+				apple.setEmail("blabla@Goo.com");
+				couponSys.comapnyDao.update(apple);
+				System.out.println(couponSys.comapnyDao.login("Apple", "1235"));
 				couponSys.comapnyDao.create(new Company(4, "McGrew-Hill Education", "MHCampus", "man@oop.com"));
 				couponSys.comapnyDao.create(new Company(5, "Adidas", "123", "jjj@kkk.com"));
 				couponSys.comapnyDao.create(new Company(6, "Nike", "123", "jjj@66hy.com"));

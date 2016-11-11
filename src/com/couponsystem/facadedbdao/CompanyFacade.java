@@ -126,8 +126,31 @@ public class CompanyFacade implements CouponClientFacade
 			}
 		catch (DAOException e)
 			{
-				throw new CompanyFacadeException(e);
+				throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
 			}
+	}
+
+	public Collection<Coupon> getCouponByDate (Date endDate) throws CompanyFacadeException
+	{
+		try
+		{
+			return companyDao.getCouponByDate(endDate);
+		} catch (DAOException e)
+		{
+			throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
+		}
+
+	}
+
+	public Collection<Coupon> getCouponsByType (Coupon.CouponType couponType) throws CompanyFacadeException
+	{
+		try
+		{
+			return companyDao.getCouponsByType(couponType);
+		} catch (DAOException e)
+		{
+			throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
+		}
 	}
 
 	public void updateCoupon(long couponId, Date endDate, double price) throws CompanyFacadeException 
@@ -138,7 +161,7 @@ public class CompanyFacade implements CouponClientFacade
 			}
 		catch (DAOException e)
 			{
-				throw new CompanyFacadeException(e);
+				throw new CompanyFacadeException(e.getMessage());
 			}
 
 	}
