@@ -36,7 +36,8 @@ public class MainTest
 			{
 				try
 					{
-						mainTest(CouponSystem.getInstance());
+						couponSys = CouponSystem.getInstance(); 
+						mainTest();
 					}
 				catch (Exception e)
 					{
@@ -45,10 +46,9 @@ public class MainTest
 					}
 			}
 
-		public static void mainTest(CouponSystem couponSys) throws Exception
+		public static void mainTest() throws Exception
 			{
 				TableManagement.startDb();
-				MainTest.couponSys = couponSys;
 				try
 					{
 						System.out.println("***Testing CompanyDAO***");
@@ -58,7 +58,7 @@ public class MainTest
 						System.out.println("***Testing CustomerDAO*** ");
 						InitiateCustomerDAO();
 						System.out.println("***Testing facade's***");
-						initiateFacades(couponSys);
+						initiateFacades();
 
 						// Testing Facades
 						System.out.println("total Coupons" + CouponSystem.getInstance().couponDao.getAll());
@@ -78,7 +78,7 @@ public class MainTest
 		 * @throws CouponSystemException
 		 *             CouponSystemException
 		 */
-		private static void initiateFacades(CouponSystem couponSys) throws CouponSystemException
+		private static void initiateFacades() throws CouponSystemException
 			{
 				// *************************************
 				System.out.println("*********************************" + "******************************************"
