@@ -153,11 +153,12 @@ public class CompanyFacade implements CouponClientFacade
 		}
 	}
 
-	public void updateCoupon(long couponId, Date endDate, double price) throws CompanyFacadeException 
+	public void updateCoupon(long couponId, Date endDate, double price) throws CompanyFacadeException
 	{
+		Coupon couponToUpdate = new Coupon();
 		try
 			{
-				couponDao.update(couponId, endDate, price);
+				couponDao.update(couponToUpdate);
 			}
 		catch (DAOException e)
 			{

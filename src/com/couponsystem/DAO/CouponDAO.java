@@ -9,24 +9,24 @@ import com.couponsystem.exceptions.DAOException;
 public interface CouponDAO extends GenericDaoClass<Coupon>
 {
 	
-	public void create(Coupon t) throws DAOException; 
+	void create(Coupon t) throws DAOException;
 
-	public Coupon read(long t) throws DAOException; 
+	 Coupon read(long t) throws DAOException;
 
-	public boolean update(long couponId, Date endDate, double price) throws DAOException;
+	 boolean update(Coupon coupon) throws DAOException;
 
-	public void delete(long t) throws DAOException; 
+	 void delete(long t) throws DAOException;
 
-	public Collection<Coupon> getAll() throws DAOException; 
+	 Collection<Coupon> getAll() throws DAOException;
 
-	public abstract Collection<Coupon> getCouponsByType(String couponType) throws DAOException;
+    Collection<Coupon> getCouponsByType(String couponType) throws DAOException;
 
-	public void deleteCouponsOfCompanyFromCoupon(long companyId) throws DAOException;
+	 void deleteCouponsOfCompanyFromCoupon(long companyId) throws DAOException;
 
-	public boolean updateCouponAmount(long id) throws DAOException;
+	 boolean updateCouponAmount(long id) throws DAOException;
 
-	public void deleteCouponFromCompanyCoupon(long couponId) throws DAOException;
+	 void deleteCouponFromCompanyCoupon(long couponId) throws DAOException;
 
-	public void deleteCouponFromCustomerCoupon(long couponId) throws DAOException;
+	 void deleteCouponFromCustomerCoupon(long couponId) throws DAOException;
 
 }

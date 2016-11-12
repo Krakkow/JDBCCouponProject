@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.couponsystem.DAO.CouponDAO;
@@ -83,8 +84,12 @@ public class DailyCouponExpirationTask extends Thread
 			{
 				try
 					{
+
 						List<Coupon> coupons = (List<Coupon>) couponDao.getAll();
-						for (Coupon coupon : coupons)
+						if(coupons.get(0)==null){
+							coupons=new ArrayList<>();
+						}
+						for (Coupon coupon : coupons )
 							{
 								if (coupon.getEndDate().before(getDate()))
 									{
@@ -117,8 +122,8 @@ public class DailyCouponExpirationTask extends Thread
 				if (zonedNow.compareTo(zonedNext5) > 0)
 					zonedNext5 = zonedNext5.plusDays(1);
 				Duration duration = Duration.between(zonedNow, zonedNext5);
-				long initalDelay = duration.getSeconds();
-				return initalDelay;
+				long initialDelay = duration.getSeconds();
+				return initialDelay;
 			}
 
 		public void stopTask()

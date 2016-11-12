@@ -22,12 +22,20 @@ public class CouponDBDAO implements CouponDAO
 		public void create(Coupon coupon) throws DAOException
 			{
 
-				String addCustomer = "INSERT INTO Coupon(id, coup_title,"
-						+ " start_date, end_date, amount, type, message," + " price, image) VALUES (?,?,?,?,?,?,?,?,?)";
+				String addCoupon = "INSERT INTO Coupon(coup_title,"
+						+ " start_date, end_date, amount, type, message," + " price, image) VALUES (?,?,?,?,?,?,?,?)";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
-				DataBaseHandler.actionOnDataBase(addCustomer, MessageAction, coupon);
+				DataBaseHandler.actionOnDataBase(addCoupon, MessageAction,
+						coupon.getTitle(),
+						coupon.getStartDate(),
+						coupon.getEndDate(),
+						coupon.getAmount(),
+						coupon.getType().toString(),
+						coupon.getMessage(),
+						coupon.getPrice(),
+						coupon.getImage());
 
 			}
 
