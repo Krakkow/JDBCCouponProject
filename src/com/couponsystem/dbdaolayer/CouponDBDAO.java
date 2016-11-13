@@ -22,8 +22,8 @@ public class CouponDBDAO implements CouponDAO
 		public void create(Coupon coupon) throws DAOException
 			{
 
-				String addCoupon = "INSERT INTO Coupon(coup_title,"
-						+ " start_date, end_date, amount, type, message," + " price, image) VALUES (?,?,?,?,?,?,?,?)";
+				String addCoupon = "INSERT INTO COUPON(coup_title,"
+						+ " start_date, end_date, amount, type, message, price, image) VALUES (?,?,?,?,?,?,?,?)";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
@@ -42,7 +42,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public Coupon read(long couponId) throws DAOException
 			{
-				String getCoupon = "SELECT * From Coupon WHERE id=?";
+				String getCoupon = "SELECT * From COUPON WHERE id=?";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
@@ -55,7 +55,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public boolean update(Coupon coupon) throws DAOException
 			{
-				String updateCoupon = "UPDATE Coupon SET endDate=?, price=? where id=?";
+				String updateCoupon = "UPDATE COUPON SET endDate=?, price=? where id=?";
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
 				boolean didUpdateCoupon = DataBaseHandler.actionOnDataBase(updateCoupon, MessageAction,
 						coupon.getEndDate(), coupon.getPrice(), coupon.getId());
@@ -66,7 +66,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public void delete(long couponId) throws DAOException
 			{
-				String deletCouponById = "DELETE FROM Coupon WHERE id= ?";
+				String deletCouponById = "DELETE FROM COUPON WHERE id= ?";
 				String MessageAction = ErrorType.UNABLE_TO_REMOVE_COUPON + "couponId: " + couponId;
 				boolean coupon = DataBaseHandler.actionOnDataBase(deletCouponById, MessageAction, couponId);
 				if (coupon)
@@ -79,10 +79,9 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public Collection<Coupon> getAll() throws DAOException
 			{
-				String getAllCoupon = "SELECT * FROM Coupon";
+				String getAllCoupon = "SELECT * FROM COUPON";
 				String messageAction = ErrorType.UNABLE_TO_GET_COUPON + " ";
-				List<Coupon> allCoupons = (List<Coupon>) DataBaseHandler.readInDataBase(getAllCoupon, messageAction,"Coupon");
-				return allCoupons;
+				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCoupon, messageAction,"Coupon");
 
 
 			}
@@ -90,7 +89,7 @@ public class CouponDBDAO implements CouponDAO
 		public Collection<Coupon> getCouponsByType(String couponType) throws DAOException
 			{
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
-				String getAllCouponByTypeSQLstatement = "SELECT * FROM Coupons WHERE TYPE=?";
+				String getAllCouponByTypeSQLstatement = "SELECT * FROM COUPON WHERE TYPE=?";
 				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCouponByTypeSQLstatement, MessageAction, "Coupon", couponType);
 
 			}
@@ -98,7 +97,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public void deleteCouponsOfCompanyFromCoupon(long companyId) throws DAOException
 			{
-				String deleteCompanyFromCompanyCouponTable = "DELETE FROM Company_coupon WHERE comp_id =? ";
+				String deleteCompanyFromCompanyCouponTable = "DELETE FROM COMPANY_COUPON WHERE comp_id =? ";
 				DataBaseHandler.actionOnDataBase(deleteCompanyFromCompanyCouponTable, "Company", companyId);
 
 			}
@@ -106,7 +105,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public boolean updateCouponAmount(long couponId) throws DAOException
 			{
-				String updateCouponAmount = "UPDATE Coupon SET amount = amount-1 where id=?";
+				String updateCouponAmount = "UPDATE COUPON SET amount = amount-1 where id=?";
 				String MessageAction = new Object()
 				{
 				}.getClass().getEnclosingMethod().getName();
@@ -119,7 +118,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public void deleteCouponFromCompanyCoupon(long couponId) throws DAOException
 			{
-				String removeCouponFromCompanyCouponSQLstatement = "DELETE FROM Company_coupon WHERE "
+				String removeCouponFromCompanyCouponSQLstatement = "DELETE FROM COMPANY_COUPON WHERE "
 						+ "coup_id =?";
 				String MassageAction = ErrorType.UNABLE_TO_REMOVE_COUPON + " : Coupons id : " + couponId
 						+ " from all customers that has been purchased";
@@ -129,7 +128,7 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public void deleteCouponFromCustomerCoupon(long couponId) throws DAOException
 			{
-				String removeCouponFromCustomerCouponSQLstatement = "DELETE FROM Customer_coupon WHERE "
+				String removeCouponFromCustomerCouponSQLstatement = "DELETE FROM CUSTOMER_COUPON WHERE "
 						+ "coup_id =?";
 				String MassageAction = ErrorType.UNABLE_TO_REMOVE_COUPON + " : Coupons id : " + couponId
 						+ " from all customers that has been purchased";
