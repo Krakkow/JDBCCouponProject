@@ -52,13 +52,13 @@ public class DailyCouponExpirationTask extends Thread
 
 		private void executeCouponExpirationDeletion() throws CouponSystemException
 			{
-				deleteCouponExpire();
+
 				while (!didAbort)
 					{
-						deleteCouponExpire();
 						try
 							{
 								waitForDeletion();
+								deleteCouponExpire();
 							}
 						catch (InterruptedException e)
 							{

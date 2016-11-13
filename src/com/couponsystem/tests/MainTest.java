@@ -36,7 +36,8 @@ public class MainTest
 			{
 				try
 					{
-						couponSys = CouponSystem.getInstance(); 
+						couponSys = CouponSystem.getInstance();
+						System.out.println("get instance is initiated: couponSys = "+couponSys);
 						mainTest();
 					}
 				catch (Exception e)
@@ -48,7 +49,9 @@ public class MainTest
 
 		public static void mainTest() throws Exception
 			{
+				System.out.println("Starting db");
 				TableManagement.startDb();
+				System.out.println("Finished db");
 				try
 					{
 						System.out.println("***Testing CompanyDAO***");
@@ -73,7 +76,6 @@ public class MainTest
 			}
 
 		/**
-		 * @param couponSys
 		 *            Coupon System
 		 * @throws CouponSystemException
 		 *             CouponSystemException
@@ -109,13 +111,14 @@ public class MainTest
 				System.out.println("*****Creating standard Coupons*****" + "\n");
 				try
 					{
-						companyTest.createCoupon(new Coupon(6, "Holiday and Spa", Date.valueOf("01\01\2016"),
-								Date.valueOf("01\01\2017"), 300, CouponType.TRAVELLING, "random coupon message", 49.99,
+						companyTest.createCoupon(new Coupon(6, "Holiday and Spa", Date.valueOf("2016-1-1"),
+								Date.valueOf("2017-1-1"), 300, CouponType.TRAVELLING, "random coupon message", 49.99,
 								"pathToImage/image.jpeg"));
 					}
 				catch (CompanyFacadeException e)
 					{
-						System.out.println(e.getMessage());
+						e.printStackTrace();
+
 					}
 				Coupon randomCoupon = new Coupon(7, "CinemaCity", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
 						300, CouponType.MOVIES, "random coupon message", 99.99, "pathToImage/image.jpeg");

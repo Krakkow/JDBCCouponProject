@@ -9,8 +9,8 @@ public class ConnectionPool
 {
 	private LinkedList<Connection> connectionList = new LinkedList<>();
 	private final int maxConnection = 5;
-	private String dbName = "CouponSystemDB";
-	private String dbUrl = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
+	private static String dbName = "CouponSystemDB";
+	public static String dbUrl = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 
 	private static ConnectionPool instance = null;;
 
