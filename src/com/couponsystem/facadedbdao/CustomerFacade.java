@@ -51,7 +51,7 @@ public class CustomerFacade implements CouponClientFacade
 						throw new CustomerFacadeException("Invalid Credentials");
 					}
 				System.out.println("Login Succesfull");
-				facade = new CustomerFacade(true).setCustomerId(customerId);
+				facade = new CustomerFacade(true).setCustomerId(customer.getId());
 				return facade;
 			}
 
@@ -95,6 +95,7 @@ public class CustomerFacade implements CouponClientFacade
 				try
 					{
 						couponDao.updateCouponAmount(coupon.getId());
+						System.out.println("purchasing coupon = "+coupon.getId()+" to customer = "+getCustomerId());
 						customerDao.purchaseCouponToCustomer(coupon.getId(), getCustomerId());
 					}
 				catch (DAOException e)
@@ -103,12 +104,12 @@ public class CustomerFacade implements CouponClientFacade
 					}
 			}
 
-		private long getCustomerId()
+		public long getCustomerId()
 			{
 				return customerId;
 			}
 
-		public CustomerFacade setCustomerId(long customerId)
+		private CustomerFacade setCustomerId(long customerId)
 			{
 				this.customerId = customerId;
 				return this;

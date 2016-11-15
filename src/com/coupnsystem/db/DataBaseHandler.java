@@ -212,7 +212,6 @@ public class DataBaseHandler
 		 * @param objects
 		 *            objects array
 		 * @see ConnectionPool
-		 * @see settingPreStmt
 		 * @return successfully or throws exception
 		 * @throws DAOException
 		 *             DAOException
@@ -231,8 +230,9 @@ public class DataBaseHandler
 					}
 				catch (DerbySQLIntegrityConstraintViolationException e)
 					{
-						checkNull(MassageAction, objects);
-						throw new DAOException("Unable to Create" + getDuplicateError(MassageAction), e);
+						String message="";
+						if(!checkNull(MassageAction, objects)){ message=" with Wrong values in to update! (null values)";}
+						throw new DAOException("Unable to Create"+message + getDuplicateError(MassageAction), e);
 
 					}
 				catch (Exception e)
@@ -263,7 +263,6 @@ public class DataBaseHandler
 		 * </ul>
 		 * 
 		 * @see ConnectionPool
-		 * @see settingPreStmt
 		 * @param action
 		 *            action
 		 * @param MassageAction
@@ -272,10 +271,6 @@ public class DataBaseHandler
 		 *            beanName
 		 * @param objects
 		 *            objects
-		 * @see instanceOfCoupon
-		 * @see instanceOfCompany
-		 * @see instanceOfCustomer
-		 * @see idOfCoupon
 		 * @return List queryList
 		 * @throws DAOException
 		 *             DAOException
@@ -355,7 +350,7 @@ public class DataBaseHandler
 				Customer customer = null;
 				try
 					{
-						customer = new Customer(rs.getLong("ID"), rs.getString("CUST_NAME"), rs.getString("PASSWORD"));
+						customer = new Customer(rs.getLong("id"), rs.getString("cust_name"), rs.getString("password"));
 						// ===>>> customer.setCoupons(new CustomerDBDAO().
 						// getCouponsByCustomerID(customer.getId()));
 						// Takes a lot of resources(Using connection each
@@ -386,9 +381,9 @@ public class DataBaseHandler
 				Coupon coupon = null;
 				try
 					{
-						coupon = new Coupon(rs.getLong("ID"), rs.getString("TITLE"), rs.getDate("START_DATE"),
-								rs.getDate("END_DATE"), rs.getInt("AMOUNT"), CouponType.valueOf(rs.getString("TYPE")),
-								rs.getString("MASSAGE"), rs.getDouble("PRICE"), rs.getString("IMGPATH"));
+						coupon = new Coupon(rs.getLong("id"),rs.getString("coup_title"), rs.getDate("start_date"),
+								rs.getDate("end_date"), rs.getInt("amount"), CouponType.valueOf(rs.getString("type")),
+								rs.getString("message"), rs.getDouble("price"), rs.getString("image"));
 					}
 				catch (SQLException e)
 					{
@@ -416,7 +411,7 @@ public class DataBaseHandler
 				Company company = null;
 				try
 					{
-						company = new Company(rs.getLong("ID"), rs.getString("comp_name"), rs.getString("password"),
+						company = new Company(rs.getLong("id"), rs.getString("comp_name"), rs.getString("password"),
 								rs.getString("email"));
 						// ===>>>company.setCoupons((new
 						// CompanyDBDAO().getCouponsByCompanyID(company.getId())));
@@ -448,7 +443,7 @@ public class DataBaseHandler
 				Long id = 0L;
 				try
 					{
-						id = rs.getLong("COUPON_ID");
+						id = rs.getLong("coupon_id");
 					}
 				catch (SQLException e)
 					{

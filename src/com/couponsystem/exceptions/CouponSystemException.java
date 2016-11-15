@@ -9,9 +9,9 @@ public class CouponSystemException extends Exception
 			super(message);
 		}
 
-		public CouponSystemException(DAOException e, AdminFacadeException x, CompanyFacadeException y, CustomerFacadeException z) 
+		public CouponSystemException(Throwable throwable)
 		{
-			super(e);
+			super(throwable);
 
 		}
 }

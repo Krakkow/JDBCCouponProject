@@ -21,13 +21,16 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public void create(Coupon coupon) throws DAOException
 			{
-
-				String addCoupon = "INSERT INTO COUPON(coup_title,"
-						+ " start_date, end_date, amount, type, message, price, image) VALUES (?,?,?,?,?,?,?,?)";
-				String MessageAction = new Object()
-					{
-					}.getClass().getEnclosingMethod().getName();
-				DataBaseHandler.actionOnDataBase(addCoupon, MessageAction,
+				String addCoupon = "INSERT INTO COUPON (coup_title,"
+						+ "start_date,end_date,amount,type,message,price,image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+//				String addCouponSQLstatement = "INSERT INTO COUPONS"
+//						+ " (TITLE,START_DATE,END_DATE,AMOUNT,TYPE,"
+//						+ "MASSAGE,PRICE,IMGPATH) "
+//						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+//				String MessageAction = new Object()
+//					{
+//					}.getClass().getEnclosingMethod().getName();
+				DataBaseHandler.actionOnDataBase(addCoupon, "Coupon",
 						coupon.getTitle(),
 						coupon.getStartDate(),
 						coupon.getEndDate(),
@@ -55,7 +58,8 @@ public class CouponDBDAO implements CouponDAO
 		@Override
 		public boolean update(Coupon coupon) throws DAOException
 			{
-				String updateCoupon = "UPDATE COUPON SET endDate=?, price=? where id=?";
+				String updateCoupon = "UPDATE COUPON SET end_date=? , price=? where id=?";
+
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
 				boolean didUpdateCoupon = DataBaseHandler.actionOnDataBase(updateCoupon, MessageAction,
 						coupon.getEndDate(), coupon.getPrice(), coupon.getId());

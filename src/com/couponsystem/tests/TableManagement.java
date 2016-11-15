@@ -11,8 +11,7 @@ public class TableManagement
 
 	public static void startDb()
 	{
-        System.out.println("before dropping tables for every start");
-        dropAllTables();
+
         System.out.println("Creating tables, after the initial drop");
         boolean create = true;
 		boolean print = true;
@@ -25,11 +24,11 @@ public class TableManagement
 		
 		if(print)
 		{
-			print("Company");
-			print("Customer");
-			print("Coupon");
-			print("Customer_coupon");
-			print("Company_coupon");
+			print("COMPANY");
+			print("CUSTOMER");
+			print("COUPON");
+			print("CUSTOMER_COUPON");
+			print("COMPANY_COUPON");
 			
 			System.out.println("---==============END==============---");
 		}
@@ -40,7 +39,7 @@ public class TableManagement
 		}
 	}
 
-	private static void print(String tableName) 
+	public static void print(String tableName)
 	{
 
 		try
@@ -107,8 +106,9 @@ public class TableManagement
 	
 	private static void dropAllTables() 
 	{
-		String[] tables = { "Company", "Customer", "Customer_coupon", "Company_coupon", "Coupon"};
-		
+//		String[] tables = { "Company_coupon"};
+		String[] tables = { "COMPANY", "CUSTOMER", "COUPON", "CUSTOMER_COUPON", "COMPANY_COUPON"};
+
 		try 
 		{
             System.out.println("getting connection from database");

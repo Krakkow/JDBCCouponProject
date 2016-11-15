@@ -40,7 +40,7 @@ public interface CompanyDAO extends GenericDaoClass<Company>
 
 		Company getCompanyByName(String company) throws DAOException;
 
-		Collection<Coupon> getCouponByDate (Date endDate) throws DAOException;
+		Collection<Coupon> getCouponByDate (long id, Date endDate) throws DAOException;
 
 		Collection<Coupon> getCouponsByType(Coupon.CouponType type)throws DAOException;
 

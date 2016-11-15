@@ -13,5 +13,9 @@ public class CustomerFacadeException extends Exception
 		{
 			super(e);
 		}
-	
+
+	public CustomerFacadeException(String s, Exception e)
+		{
+			super(s,e);
+		}
 }

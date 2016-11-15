@@ -2,6 +2,7 @@ package com.couponsystem.tests;
 
 import java.sql.Date;
 
+import com.coupnsystem.db.TableCreation;
 import com.couponsystem.beans.Company;
 import com.couponsystem.beans.Coupon;
 import com.couponsystem.beans.Coupon.CouponType;
@@ -42,8 +43,7 @@ public class MainTest
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
+						System.out.println(e.getMessage());
 					}
 			}
 
@@ -52,8 +52,8 @@ public class MainTest
 				System.out.println("Starting db");
 				TableManagement.startDb();
 				System.out.println("Finished db");
-				try
-					{
+//				try
+//					{
 						System.out.println("***Testing CompanyDAO***");
 						InitiateCompanyDAO();
 						System.out.println("***Testing CouponDAO***");
@@ -65,14 +65,7 @@ public class MainTest
 
 						// Testing Facades
 						System.out.println("total Coupons" + CouponSystem.getInstance().couponDao.getAll());
-						System.out.println("***Testing Facades in threads simultaniaclly***");
-					}
-				catch (CouponSystemException e)
-					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
-						throw new CouponSystemException(ErrorType.TEST_ERROR_HAS_BEEN_INVOKED + e.getMessage());
-					}
+
 			}
 
 		/**
@@ -82,7 +75,6 @@ public class MainTest
 		 */
 		private static void initiateFacades() throws CouponSystemException
 			{
-				// *************************************
 				System.out.println("*********************************" + "******************************************"
 						+ "**************************");
 				System.out.println("***Testing Company facade******" + "\n");
@@ -94,7 +86,6 @@ public class MainTest
 					}
 				catch (DAOException e)
 					{
-						e.printStackTrace();
                     	System.out.println(e.getMessage());
 					}
 				CompanyFacade companyTest = null;
@@ -104,149 +95,105 @@ public class MainTest
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
                     	System.out.println(e.getMessage());
 					}
 
 				System.out.println("*****Creating standard Coupons*****" + "\n");
 				try
 					{
-						companyTest.createCoupon(new Coupon(6, "Holiday and Spa", Date.valueOf("2016-1-1"),
+						companyTest.createCoupon(new Coupon(6,"Holiday and Spa", Date.valueOf("2016-1-1"),
 								Date.valueOf("2017-1-1"), 300, CouponType.TRAVELLING, "random coupon message", 49.99,
 								"pathToImage/image.jpeg"));
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
-
+						System.out.println(e.getMessage());
 					}
-				Coupon randomCoupon = new Coupon(7, "CinemaCity", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
+				Coupon randomCoupon = new Coupon(7,"CinemaCity1", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
 						300, CouponType.MOVIES, "random coupon message", 99.99, "pathToImage/image.jpeg");
-				Coupon expiredCoupon = new Coupon(8, "Kitan+", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				Coupon expiredCoupon = new Coupon(8,"KitanPlus", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.HOMEDESIGN, "random coupon message", 109.99, "pathToImage/image.jpeg");
-				Coupon noCouponsLeft = new Coupon(9, "Bed & Breakfast", Date.valueOf("2016-1-1"),
+				Coupon reallyExpiredCoupon = new Coupon(9,"expired", Date.valueOf("2015-1-1"), Date.valueOf("2016-1-1"), 300,
+						CouponType.HOMEDESIGN, "random coupon message", 109.99, "pathToImage/image.jpeg");
+				Coupon newCoupon1 = new Coupon(10,"Casino Trip", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
+						300, CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
+				Coupon newCoupon2 = new Coupon(11,"Discover Cambodia", Date.valueOf("2016-1-1"),
 						Date.valueOf("2017-1-1"), 300, CouponType.TRAVELLING, "random coupon message", 149.99,
 						"pathToImage/image.jpeg");
-				Coupon newCoupon1 = new Coupon(10, "Casino Trip", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
-						300, CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
-				Coupon newCoupon2 = new Coupon(11, "Discover Cambodia", Date.valueOf("2016-1-1"),
+				Coupon noCouponsLeft = new Coupon(12,"noCouponsLeft", Date.valueOf("2016-1-1"),
 						Date.valueOf("2017-1-1"), 300, CouponType.TRAVELLING, "random coupon message", 149.99,
 						"pathToImage/image.jpeg");
 
-				try
-					{
-						companyTest.createCoupon(randomCoupon);
-					}
-				catch (CompanyFacadeException e)
-					{
-						System.out.println(e.getMessage());
-					}
 				System.out.println("\n" + "***Getting all company's Coupons***" + "\n");
-				try
-					{
-						System.out.println(companyTest.getAllCoupons());
-					}
-				catch (CompanyFacadeException e)
-					{
-						System.out.println(e.getMessage());
-					}
-				try
-					{
-						System.out.println(companyTest.getAllCoupons());
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
-					}
+				System.out.println("companyTest id = "+companyTest.getCompanyId());
+
 				System.out.println("\n");
 				System.out.println("\n" + "***Creating Coupons***" + "\n");
+
 				try
 					{
 						companyTest.createCoupon(randomCoupon);
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
-					}
-				try
-					{
 						companyTest.createCoupon(expiredCoupon);
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
-					}
-				try
-					{
+						companyTest.createCoupon(reallyExpiredCoupon);
+						companyTest.createCoupon(newCoupon1);
+						companyTest.createCoupon(newCoupon2);
 						companyTest.createCoupon(noCouponsLeft);
+						TableManagement.print("COUPON");
+
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
+						System.out.println(e.getMessage());
+						
 					}
-				System.out.println("\n" + "***Getting all company's Coupons***" + "\n");
 				try
 					{
 						System.out.println(companyTest.getAllCoupons());
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
-                    	System.out.println(e.getMessage());
+						System.out.println(e.getMessage());
 					}
+
 				System.out.println("\n" + "***Updating Coupon***");
 				try
 					{
-						companyTest.updateCoupon(7, Date.valueOf("01\01\2017"), 43.45);
+						companyTest.updateCoupon(7, Date.valueOf("2017-1-1"), 43.45);
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 
-				System.out.println("\n" + "***Getting Coupons of Company***" + "\n");
-				try
-					{
-						System.out.println(companyTest.getAllCoupons());
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
 				try
 					{
 						System.out.println(couponSys.couponDao.getAll());
 					}
 				catch (DAOException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting Coupons of Company by Date***" + "\n");
 				try
 					{
-						System.out.println(companyTest.getCouponByDate(Date.valueOf("2017")));
+						System.out.println(companyTest.getCouponByDate(Date.valueOf("2017-1-1")));
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
-				System.out.println("\n" + "***Getting Coupons of Company up to price 91***" + "\n");
+				System.out.println("\n" + "***Getting Coupons of Company up to price 199.99***" + "\n");
 				try
 					{
-						System.out.println(companyTest.getCouponsByPrice(109.99));
+						System.out.println(companyTest.getCouponsByPrice(199.99));
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting Coupons of Company by type TRAVELING***" + "\n");
 				try
@@ -255,8 +202,8 @@ public class MainTest
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("*********************************" + "******************************************"
 						+ "**************************");
@@ -266,12 +213,12 @@ public class MainTest
 				CustomerFacade myCustomer = null;
 				try
 					{
-						myCustomer = (CustomerFacade) couponSys.login("kowalsky", "1234", ClientType.CUSTOMER);
+						myCustomer = (CustomerFacade) couponSys.login("Greg", "12345", ClientType.CUSTOMER);
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("login Successfully");
 				System.out.println("\n" + "***Purchasing coupons ***");
@@ -279,21 +226,13 @@ public class MainTest
 						"\n" + "is coupons with the name randomCOupon and noCouponsleft purchasing done successfully?");
 				try
 					{
+						myCustomer.purchaseCoupon(newCoupon2);
 						myCustomer.purchaseCoupon(randomCoupon);
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
-					}
-				try
-					{
-						myCustomer.purchaseCoupon(noCouponsLeft);
-					}
-				catch (CustomerFacadeException e)
-					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -301,8 +240,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Trying to purchase coupon that out of amount***" + "\n");
 				try
@@ -312,8 +251,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -321,26 +260,26 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
+				System.out.println("***Trying to delete coupon of company ***");
 				try
 					{
 						companyTest.deleteCoupon(noCouponsLeft);
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Trying to purchase coupon that has expired***" + "\n");
 				try
 					{
-						myCustomer.purchaseCoupon(expiredCoupon);
+						myCustomer.purchaseCoupon(reallyExpiredCoupon);
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
 					}
 				try
@@ -349,8 +288,8 @@ public class MainTest
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Trying to purchase coupon that already exist : ***" + "\n");
 				try
@@ -359,17 +298,17 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
 					}
 				try
 					{
 						allCoupons = couponSys.couponDao.getAll().size() + 1;
+						System.out.println("number of coupons is "+allCoupons);
 					}
 				catch (DAOException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -377,8 +316,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting all purchased coupons ***" + "\n");
 				try
@@ -387,8 +326,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting all purchased coupons by type ELECTRICITY***" + "\n");
 				try
@@ -397,8 +336,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting all coupons ***" + "\n");
 				try
@@ -407,8 +346,8 @@ public class MainTest
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting all coupons of the company by price ***" + "\n");
 				try
@@ -417,8 +356,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Getting all companies Coupons***" + "\n");
 				System.out.println("*********************************" + "******************************************"
@@ -432,17 +371,18 @@ public class MainTest
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
 						admin.createCompany(new Company(0, "companyTest2", "1234", "yahoo@wallack.co.il"));
+						TableManagement.print("Company");
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				CompanyFacade companyTest2 = null;
 				try
@@ -451,8 +391,8 @@ public class MainTest
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -460,8 +400,8 @@ public class MainTest
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				// System.out.println(companyTest.getCouponsOfCompany());
 				try
@@ -470,8 +410,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 
 				Coupon homeTheater = null;
@@ -479,46 +419,32 @@ public class MainTest
 				Coupon seasonTeamTickets = null;
 				try
 					{
-						homeTheater = new Coupon(12, "Home Theater", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
+
+						homeTheater = new Coupon(13,"Home Theater", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
 								120, CouponType.ELECTRICITY, "random coupon message", 229.99, "pathToImage/image.jpeg");
-						michelinDinner = new Coupon(13, "Michelin Dinner", Date.valueOf("2016-1-1"),
+						michelinDinner = new Coupon(14,"Michelin Dinner", Date.valueOf("2016-1-1"),
 								Date.valueOf("2017-1-1"), 30, CouponType.RESTAURANT, "random coupon message", 299.99,
 								"pathToImage/image.jpeg");
-						seasonTeamTickets = new Coupon(14, "Season Team Tickets", Date.valueOf("2016-1-1"),
+						seasonTeamTickets = new Coupon(15,"Season Team Tickets", Date.valueOf("2016-1-1"),
 								Date.valueOf("2017-1-1"), 30, CouponType.SPORTS, "random coupon message", 999.99,
 								"pathToImage/image.jpeg");
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
 						companyTest2.createCoupon(homeTheater);
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
-				try
-					{
 						companyTest2.createCoupon(michelinDinner);
-					}
-				catch (CompanyFacadeException e)
-					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
-				try
-					{
 						companyTest2.createCoupon(seasonTeamTickets);
+						TableManagement.print("Coupon");
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -526,29 +452,32 @@ public class MainTest
 					}
 				catch (DAOException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
 						myCustomer.purchaseCoupon(homeTheater);
+						TableManagement.print("CUSTOMER_COUPON");
 						myCustomer.purchaseCoupon(michelinDinner);
+						TableManagement.print("CUSTOMER_COUPON");
 						myCustomer.purchaseCoupon(seasonTeamTickets);
+						TableManagement.print("CUSTOMER_COUPON");
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Trying to create coupon with title that already exists***" + "\n");
 
 				try
 					{
+						//1
 						companyTest.createCoupon(homeTheater);
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
 					}
 
@@ -560,8 +489,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Show all coupons***" + "\n");
 				try
@@ -570,8 +499,8 @@ public class MainTest
 					}
 				catch (DAOException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -579,8 +508,8 @@ public class MainTest
 					}
 				catch (CustomerFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -588,8 +517,8 @@ public class MainTest
 					}
 				catch (CompanyFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -597,8 +526,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Tyring to add Company that has the same name***");
 				try
@@ -607,7 +536,7 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
+
 						System.out.println(e.getMessage());
 					}
 				try
@@ -616,8 +545,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				System.out.println("\n" + "***Tyring to add Customer that has the same name ***" + "\n");
 				try
@@ -627,7 +556,6 @@ public class MainTest
 				catch (AdminFacadeException e)
 				// catch (CouponSystemException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
 					}
 				try
@@ -636,8 +564,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						
 					}
 				try
 					{
@@ -645,48 +573,54 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+					//	
 					}
+				System.out.println("***Trying to delete company***");
 				try
 					{
 						admin.deleteCompany(9);
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						//
 					}
 				CustomerFacade customer2 = null;
+				System.out.println("*** Trying to login with a customer that doe not exist ***");
 				try
 					{
 						customer2 = (CustomerFacade) couponSys.login("Gilbertu", "12345", ClientType.CUSTOMER);
+						
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
+
+					System.out.println(e.getMessage());
 					}
-				try
-					{
-						customer2.purchaseCoupon(randomCoupon);
-						customer2.purchaseCoupon(newCoupon2);
-						customer2.purchaseCoupon(michelinDinner);
-					}
-				catch (CustomerFacadeException e)
-					{
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
+//				try
+//					{
+//						customer2.purchaseCoupon(randomCoupon);
+//						TableManagement.print("CUSTOMER_COUPON");
+//						customer2.purchaseCoupon(newCoupon2);
+//						TableManagement.print("CUSTOMER_COUPON");
+//						customer2.purchaseCoupon(michelinDinner);
+//						TableManagement.print("CUSTOMER_COUPON");
+//					}
+//				catch (CustomerFacadeException e)
+//					{
+//						System.out.println(e.getMessage());
+//					//	
+//					}
 				System.out.println("\n" + "***Trying to remove customer that has coupon purchased***" + "\n");
 				try
 					{
-						admin.deleteCustomer(9);
+						admin.deleteCustomer(5);
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+						//
 					}
 				System.out.println("\n" + "***Showing all Companies and Customers***" + "\n");
 				try
@@ -695,8 +629,8 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
+					//	
 					}
 				try
 					{
@@ -704,7 +638,6 @@ public class MainTest
 					}
 				catch (AdminFacadeException e)
 					{
-						e.printStackTrace();
 						System.out.println(e.getMessage());
 					}
 			}
@@ -718,22 +651,24 @@ public class MainTest
 		private static void InitiateCouponDAO() throws DAOException, CouponSystemException
 			{
 				// Date format "yyyy-[m]m-[d]d
-				Coupon Holiday = new Coupon(1, "Holiday", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				Coupon Holiday = new Coupon(1,"Holiday", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
 				couponSys.couponDao.create(Holiday);
-				Coupon Food = new Coupon(2, "Food", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				Coupon Food = new Coupon(2,"Food", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.RESTAURANT, "random coupon message", 149.99, "pathToImage/image.jpeg");
 				couponSys.couponDao.create(Food);
-				Coupon electricy = new Coupon(3, "Electricity", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				Coupon newTablet = new Coupon(3,"newTablet", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.ELECTRICITY, "random coupon message", 149.99, "pathToImage/image.jpeg");
-				couponSys.couponDao.create(electricy);
-				Coupon Sport = new Coupon(4, "Sport", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				couponSys.couponDao.create(newTablet);
+				Coupon Sport = new Coupon(4,"Sport", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.SPORTS, "random coupon message", 149.99, "pathToImage/image.jpeg");
 				couponSys.couponDao.create(Sport);
-				Coupon Homedesign = new Coupon(5, "Homedesign", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
+				Coupon HomeDesign = new Coupon(5,"HomeDesign", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"), 300,
 						CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
-				couponSys.couponDao.create(Homedesign);
+				couponSys.couponDao.create(HomeDesign);
+				TableManagement.print("Coupon");
 				couponSys.couponDao.delete(1);
+				TableManagement.print("Coupon");
 			}
 
 		/**
@@ -744,15 +679,26 @@ public class MainTest
 			{
 				Customer kowalsky = new Customer(1, "kowalsky", "1234");
 				couponSys.customerDao.create(kowalsky);
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(2, "Greg", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(3, "Robert", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(4, "Eric", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(5, "Lisa", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(6, "Tony", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(7, "Stephen", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.create(new Customer(8, "Kevin", "12345"));
+				TableManagement.print("Customer");
 				couponSys.customerDao.update(kowalsky);
+				TableManagement.print("Customer");
 				couponSys.customerDao.delete(1);
+				TableManagement.print("Customer");
+
 			}
 
 		/**
@@ -764,17 +710,26 @@ public class MainTest
 		private static void InitiateCompanyDAO() throws DAOException, CouponSystemException
 			{
 				couponSys.comapnyDao.create(new Company(1, "Intel", "1234abc", "intel@intel.com"));
+				TableManagement.print("Company");
 				couponSys.comapnyDao.create(new Company(2, "Qualitest", "1234abc", "Melbourne@liquid.com"));
+				TableManagement.print("Company");
 				couponSys.comapnyDao.create(new Company(3, "SigmaDesigns", "1234AbC", "Mel34@liquid.com"));
+				TableManagement.print("Company");
 				Company apple = new Company(4, "Apple", "1235", "appleCrack@gsdgs.com");
 				couponSys.comapnyDao.create(apple);
+				TableManagement.print("Company");
 				apple.setEmail("blabla@Goo.com");
 				couponSys.comapnyDao.update(apple);
+				TableManagement.print("Company");
 				System.out.println(couponSys.comapnyDao.login("Apple", "1235"));
 				couponSys.comapnyDao.create(new Company(5, "McGrew-Hill Education", "MHCampus", "man@oop.com"));
+				TableManagement.print("Company");
 				couponSys.comapnyDao.create(new Company(6, "Adidas", "123", "jjj@kkk.com"));
+				TableManagement.print("Company");
 				couponSys.comapnyDao.create(new Company(7, "Nike", "123", "jjj@66hy.com"));
+				TableManagement.print("Company");
 				couponSys.comapnyDao.create(new Company(8, "OrCorp", "123", "jjj@cvbft.com"));
+				TableManagement.print("Company");
 			}
 
 	}

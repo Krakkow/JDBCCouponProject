@@ -24,7 +24,7 @@ public class CustomerDBDAO implements CustomerDAO
 		public void create(Customer customer) throws DAOException
 			{
 
-				String addCustomer = "INSERT INTO Customer (cust_name, password) VALUES (?,?)";
+				String addCustomer = "INSERT INTO CUSTOMER (cust_name, password) VALUES (?,?)";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
@@ -35,7 +35,7 @@ public class CustomerDBDAO implements CustomerDAO
 		public Customer read(long id) throws DAOException
 
 			{
-				String getCustomer = "SELECT * From Customer WHERE id =? ";
+				String getCustomer = "SELECT * From CUSTOMER WHERE id =? ";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
@@ -48,7 +48,7 @@ public class CustomerDBDAO implements CustomerDAO
 		public boolean update(Customer customer) throws DAOException
 			{
 
-				String updateCustomer = "UPDATE Company SET password=? WHERE id=?";
+				String updateCustomer = "UPDATE CUSTOMER SET password=? WHERE id=?";
 				String MessageAction = new Object()
 					{
 					}.getClass().getEnclosingMethod().getName();
@@ -66,9 +66,9 @@ public class CustomerDBDAO implements CustomerDAO
 		public void delete(long customerID) throws DAOException
 			{
 
-				String deletCustomerById = "DELETE FROM Customer WHERE id= ?";
+				String deleteCustomerById = "DELETE FROM CUSTOMER WHERE id= ?";
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
-				boolean company = DataBaseHandler.actionOnDataBase(deletCustomerById, MessageAction, customerID);
+				boolean company = DataBaseHandler.actionOnDataBase(deleteCustomerById, MessageAction, customerID);
 				if (company)
 					MessageAction = "successfully deleted";
 				System.out.println(MessageAction);
@@ -76,7 +76,7 @@ public class CustomerDBDAO implements CustomerDAO
 
 		public Collection<Customer> getAll() throws DAOException
 			{
-				String getAllCustomer = "SELECT * FROM Customer";
+				String getAllCustomer = "SELECT * FROM CUSTOMER";
 				String messageAction = ErrorType.UNABLE_TO_GET_CUSTOMERS + " ";
 				List<Customer> allCustomers = (List<Customer>) DataBaseHandler.readInDataBase(getAllCustomer,
 						messageAction, "Customer");
@@ -85,7 +85,7 @@ public class CustomerDBDAO implements CustomerDAO
 
 		public List<Coupon> getCoupons(long id) throws DAOException
 			{
-				String getCouponsId = "SELECT coup_id FROM Company_Coupon WHERE id=?";
+				String getCouponsId = "SELECT coup_id FROM COMPANY_COUPON WHERE id=?";
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
 				List<Coupon> coupons = (List<Coupon>) DataBaseHandler.readInDataBase(getCouponsId, MessageAction,"Coupon", id);
 				return (List<Coupon>) coupons.get(0);
@@ -94,7 +94,7 @@ public class CustomerDBDAO implements CustomerDAO
 		@Override
 		public void purchaseCouponToCustomer(long couponID, long customerID) throws DAOException
 			{
-				String purchaseCoupon = "INSERT INTO Customer_coupon (cust_id, coup_id) " + "VALUES(?,?) ";
+				String purchaseCoupon = "INSERT INTO CUSTOMER_COUPON (cust_id, coup_id) " + "VALUES(?,?) ";
 				DataBaseHandler.actionOnDataBase(purchaseCoupon, "Coupon", customerID, couponID);
 
 			}
@@ -102,7 +102,7 @@ public class CustomerDBDAO implements CustomerDAO
 		@Override
 		public void unPurchaseCouponToCustomer(long couponID, long customerID) throws DAOException
 			{
-				String unPurchaseCoupon = "DELETE FROM Customer_coupon WHERE cust_id = " + customerID + " and coup_id= "
+				String unPurchaseCoupon = "DELETE FROM CUSTOMER_COUPON WHERE cust_id = " + customerID + " and coup_id= "
 						+ couponID;
 				DataBaseHandler.actionOnDataBase(unPurchaseCoupon, "Coupon", customerID, couponID);
 
@@ -111,14 +111,14 @@ public class CustomerDBDAO implements CustomerDAO
 		@Override
 		public void deleteCustomerFromJoin(long customerID) throws DAOException
 			{
-				String deleteCustomerFromCustomerCouponTable = "DELETE FROM Customer_coupon WHERE cust_id = ?";
+				String deleteCustomerFromCustomerCouponTable = "DELETE FROM CUSTOMER_COUPON WHERE cust_id = ?";
 				DataBaseHandler.actionOnDataBase(deleteCustomerFromCustomerCouponTable, "Customer", customerID);
 			}
 
 		@Override
 		public void deleteCouponFromCustomers(long couponId) throws DAOException
 			{
-				String deleteCouponFromCustomers = "DELETE FROM Customer_coupon WHERE coup_id=?";
+				String deleteCouponFromCustomers = "DELETE FROM CUSTOMER_COUPON WHERE coup_id=?";
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
 				DataBaseHandler.actionOnDataBase(deleteCouponFromCustomers, MessageAction, couponId);
 				
@@ -134,7 +134,6 @@ public class CustomerDBDAO implements CustomerDAO
 		 * 
 		 * @param companyId
 		 *            id to remove coupons
-		 * @see DataBaseDBDAO
 		 * @see CustomerDAO
 		 * @see Customer
 		 * @throws DAOException
@@ -144,9 +143,9 @@ public class CustomerDBDAO implements CustomerDAO
 		@Override
 		public void removeCouponsOfCompanyFromCouponsOfCustomer(long companyId) throws DAOException
 			{
-				String removeCompanySQLstatement = "DELETE FROM Customer_coupon WHERE "
-						+ "Customer_coupon.coup_id IN ( SELECT coup_id FROM Company_coupon WHERE "
-						+ "Company_coupon.comp_id=?)";
+				String removeCompanySQLstatement = "DELETE FROM CUSTOMER_COUPON WHERE "
+						+ "CUSTOMER_COUPON.coup_id IN ( SELECT coup_id FROM COMPANY_COUPON WHERE "
+						+ "COMPANY_COUPON.comp_id=?)";
 				String MassageAction = ErrorType.UNABLE_TO_REMOVE_COUPON + " : Coupons of Company id : " + companyId
 						+ " from all customers that has been purchased";
 				DataBaseHandler.actionOnDataBase(removeCompanySQLstatement, MassageAction, companyId);
@@ -155,7 +154,7 @@ public class CustomerDBDAO implements CustomerDAO
 		public Customer login(String cust_name, String password) throws DAOException
 			{
 				
-				String login = "SELECT * FROM Customer WHERE cust_name=? AND password=?";
+				String login = "SELECT * FROM CUSTOMER WHERE cust_name=? AND password=?";
 				List<Customer> customers = (List<Customer>) DataBaseHandler.readInDataBase(login, "Logging in", "Customer",cust_name, password);
 				return customers.get(0);
 			}
@@ -163,30 +162,32 @@ public class CustomerDBDAO implements CustomerDAO
 		@Override
 		public Collection<Coupon> getAllCouponsOfCustomer(long customerId) throws DAOException
 			{
-				String getAllCouponCustomerSQLstatement = "SELECT * FROM Coupon WHERE  "
-		                + "Coupon.id IN ( SELECT coup_id FROM Customer_coupons WHERE "
-		                + "Customer_coupons.cust_id=?)";
+				String getAllCouponCustomerSQLstatement = "SELECT * FROM COUPON WHERE  "
+		                + "COUPON.id IN ( SELECT coup_id FROM CUSTOMER_COUPON WHERE "
+		                + "CUSTOMER_COUPON.cust_id=?)";
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
-				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCouponCustomerSQLstatement, MessageAction, "Customer", customerId);
+				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCouponCustomerSQLstatement, MessageAction, "Coupon", customerId);
 			}
 
 		@Override
 		public Collection<Coupon> getAllCouponsByType(long customerId, CouponType type) throws DAOException
 			{
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
-				String getAllCouponCompaniesByTypeSQLstatement = "SELECT * FROM Coupons WHERE  "
-		                + "Coupons.id IN ( SELECT coup_id FROM Customer_coupons WHERE "
-		                + "Customer_coupons.cust_id=?) AND TYPE=?";
-				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCouponCompaniesByTypeSQLstatement, MessageAction, "Coupon", customerId, type);
+				String getAllCouponCompaniesByTypeSQLstatement = "SELECT * FROM COUPON WHERE  "
+		                + "COUPON.id IN ( SELECT coup_id FROM CUSTOMER_COUPON WHERE "
+		                + "CUSTOMER_COUPON.cust_id=?) AND type=?";
+				return (Collection<Coupon>) DataBaseHandler.readInDataBase(
+						getAllCouponCompaniesByTypeSQLstatement,
+						MessageAction, "Coupon", customerId, type.toString());
 			}
 
 		@Override
 		public Collection<Coupon> getAllCouponsByPrice(long customerId, double price) throws DAOException
 			{
 				String MessageAction = new Object(){}.getClass().getEnclosingMethod().getName();
-				String getAllCouponCompaniesByPriceSQLstatement = "SELECT * FROM Coupons WHERE  "
-		                + "Coupons.id IN ( SELECT coup_id FROM Customer_coupons WHERE "
-		                + "Customer_coupons.id=?) AND price <=?";
+				String getAllCouponCompaniesByPriceSQLstatement = "SELECT * FROM COUPON WHERE  "
+		                + "COUPON.id IN ( SELECT coup_id FROM CUSTOMER_COUPON WHERE "
+		                + "CUSTOMER_COUPON.cust_id=?) AND price <=?";
 				return (Collection<Coupon>) DataBaseHandler.readInDataBase(getAllCouponCompaniesByPriceSQLstatement, MessageAction, "Coupon", customerId, price);
 				
 			}

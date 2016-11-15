@@ -17,4 +17,8 @@ public class CompanyFacadeException extends Exception
 				super(e);
 			}
 
+		public CompanyFacadeException(String s, DAOException e)
+			{
+				super(s,e);
+			}
 	}

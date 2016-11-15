@@ -13,4 +13,8 @@ public class AdminFacadeException extends Exception {
 		super(e);
 	}
 
+	public AdminFacadeException(String s, DAOException e)
+		{
+			super(s,e);
+		}
 }

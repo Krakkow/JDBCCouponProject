@@ -95,7 +95,7 @@ public class AdminFacade implements CouponClientFacade
 					}
 				catch (DAOException e)
 					{
-						throw new AdminFacadeException("Unable to find the requested company " + e);
+						throw new AdminFacadeException("Unable to find the requested company ", e);
 					}
 				return compName;
 
@@ -125,8 +125,7 @@ public class AdminFacade implements CouponClientFacade
 					}
 				catch (DAOException e)
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						throw new AdminFacadeException(e);
 					}
 
 			}

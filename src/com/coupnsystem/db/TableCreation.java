@@ -26,7 +26,7 @@ public class TableCreation
 
 						if (Company)
 							{
-								sqlCommand = "CREATE TABLE Company "
+								sqlCommand = "CREATE TABLE COMPANY "
 										+ "(id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY"
 										+ "(START WITH 1, INCREMENT BY 1)," + " comp_name VARCHAR(25) UNIQUE NOT NULL, "
 										+ " password VARCHAR(25) NOT NULL, " + " email VARCHAR(30) NOT NULL)";
@@ -35,13 +35,13 @@ public class TableCreation
 							}
 						if (Customer)
 							{
-								sqlCommand = "CREATE TABLE Customer (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), cust_name VARCHAR (25) NOT NULL UNIQUE, password VARCHAR (25))";
+								sqlCommand = "CREATE TABLE CUSTOMER (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), cust_name VARCHAR (25) NOT NULL UNIQUE, password VARCHAR (25))";
 								stmt.execute(sqlCommand);
 								System.out.println("success: " + sqlCommand);
 							}
 						if (Coupon)
 							{
-								sqlCommand = "CREATE TABLE Coupon (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), coup_title VARCHAR (50) NOT NULL UNIQUE,"
+								sqlCommand = "CREATE TABLE COUPON (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), coup_title VARCHAR (50) NOT NULL UNIQUE,"
 										+ " start_date DATE, end_date DATE, amount INTEGER, type VARCHAR (25), message VARCHAR (60),"
 										+ " price DOUBLE, image VARCHAR (50))";
 								stmt.execute(sqlCommand);
@@ -49,13 +49,13 @@ public class TableCreation
 							}
 						if (Customer_coupon)
 							{
-								sqlCommand = "CREATE TABLE Customer_coupon (cust_id BIGINT , coup_id BIGINT, PRIMARY KEY(cust_id, coup_id))";
+								sqlCommand = "CREATE TABLE CUSTOMER_COUPON (cust_id BIGINT , coup_id BIGINT, PRIMARY KEY(cust_id, coup_id))";
 								stmt.execute(sqlCommand);
 								System.out.println("success: " + sqlCommand);
 							}
 						if (Company_coupon)
 							{
-								sqlCommand = "CREATE TABLE Company_coupon (comp_id BIGINT, coup_id BIGINT, PRIMARY KEY(comp_id, coup_id))";
+								sqlCommand = "CREATE TABLE COMPANY_COUPON (comp_id BIGINT, coup_id BIGINT, PRIMARY KEY(comp_id, coup_id))";
 								stmt.execute(sqlCommand);
 								System.out.println("success: " + sqlCommand);
 							}

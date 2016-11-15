@@ -1,5 +1,6 @@
 package com.couponsystem.system;
 
+import com.coupnsystem.db.ConnectionPool;
 import com.couponsystem.DAO.CompanyDAO;
 import com.couponsystem.DAO.CouponDAO;
 import com.couponsystem.DAO.CustomerDAO;
@@ -70,7 +71,7 @@ public class CouponSystem
 				}
 			catch (Exception e)
 				{
-					throw new CustomerFacadeException("Could not login " + e.getMessage());
+					throw new CustomerFacadeException("Could not login ",e);
 				}
 			return facade;
 		}
@@ -78,6 +79,7 @@ public class CouponSystem
 		public void shutDown()
 		{
 			this.task.stopTask();
+			ConnectionPool.getInstance().closeAllCollection();
 			System.exit(0);
 		}
 	}

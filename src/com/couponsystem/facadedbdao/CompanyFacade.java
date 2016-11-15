@@ -37,7 +37,7 @@ public class CompanyFacade implements CouponClientFacade
 					customerDao = new CustomerDBDAO();
 				}
 		}
-
+//fuck you kowalsky
 	@Override
 	public CouponClientFacade login(String name, String password, ClientType clientType) throws CompanyFacadeException
 		{
@@ -49,8 +49,7 @@ public class CompanyFacade implements CouponClientFacade
 				}
 			catch (DAOException e)
 				{
-					// TODO Auto-generated catch block
-					throw new CompanyFacadeException("Wrong name or password or client type ");
+					throw new CompanyFacadeException("Cannot log in please check password or username",e);
 				}
 			if (!name.equals(company.getCompName()) || !password.equals(company.getPassword()) || !clientType.equals(ClientType.COMPANY))
 				{
@@ -78,6 +77,8 @@ public class CompanyFacade implements CouponClientFacade
 		try
 			{
 				couponDao.create(coupon);
+				System.out.println("***Creating coupon = "+coupon.getId()+" and company = "+getCompanyId());
+				companyDao.createCouponToCompany(getCompanyId(),coupon.getId());
 			}
 		catch (DAOException e)
 			{
@@ -109,7 +110,7 @@ public class CompanyFacade implements CouponClientFacade
 		//Returns all the coupons from that company
 		try
 			{
-				return companyDao.getAllCouponsOfCompany(getCompanyId());
+				return companyDao.getAllCouponsOfCompany(companyId);
 			}
 		catch (DAOException e)
 			{
@@ -126,7 +127,7 @@ public class CompanyFacade implements CouponClientFacade
 			}
 		catch (DAOException e)
 			{
-				throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
+				throw new CompanyFacadeException("No coupon were found matching the value you've put in." , e);
 			}
 	}
 
@@ -134,10 +135,10 @@ public class CompanyFacade implements CouponClientFacade
 	{
 		try
 		{
-			return companyDao.getCouponByDate(endDate);
+			return companyDao.getCouponByDate(companyId, endDate);
 		} catch (DAOException e)
 		{
-			throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
+			throw new CompanyFacadeException("No coupon were found matching the value you've put in. " , e);
 		}
 
 	}
@@ -149,20 +150,24 @@ public class CompanyFacade implements CouponClientFacade
 			return companyDao.getCouponsByType(couponType);
 		} catch (DAOException e)
 		{
-			throw new CompanyFacadeException("No coupon were found matching the value you've put in." + e.getMessage());
+			throw new CompanyFacadeException("No coupon were found matching the value you've put in." ,e);
 		}
 	}
 
 	public void updateCoupon(long couponId, Date endDate, double price) throws CompanyFacadeException
 	{
-		Coupon couponToUpdate = new Coupon();
+		Coupon couponToUpdate = new Coupon(couponId,null,null,endDate,0,null,null,price,null);
 		try
 			{
+//				couponToUpdate.getId();
+//				couponToUpdate.setEndDate(endDate);
+//				couponToUpdate.setPrice(price);
+			//	System.out.println("coupon to update from CompanyFacade() "+couponToUpdate);
 				couponDao.update(couponToUpdate);
 			}
 		catch (DAOException e)
 			{
-				throw new CompanyFacadeException(e.getMessage());
+				throw new CompanyFacadeException(e);
 			}
 
 	}
