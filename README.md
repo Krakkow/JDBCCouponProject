@@ -46,6 +46,13 @@ Coupon:
                 Coupon(5, "Homedesign", Date.valueOf("2016-1-1"), Date.valueOf("2017-1-1"),
                         300, CouponType.TRAVELLING, "random coupon message", 149.99, "pathToImage/image.jpeg");
 
+**These are just part of the coupons created.
+
 As you'll progress with the application, you would be able to see different abilities, according to the client type.
 
 You would be able to experience all 3 types. Up to you!
+
+
+The Main test runs automatically. You would be able to watch the various application capabilities in the console.
+
+TODO: Either create a batch file that will run the derby server automatically or give an explanation on how to run it properly.
